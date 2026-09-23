@@ -1,0 +1,6 @@
+@Petit.WebApi_HostAddress = http://localhost:5255
+
+GET {{Petit.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

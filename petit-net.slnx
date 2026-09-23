@@ -1,0 +1,29 @@
+<Solution>
+  <Folder Name="/.opencode/" />
+  <Folder Name="/.opencode/agent/">
+    <File Path=".opencode/agent/intent-writer.md" />
+    <File Path=".opencode/agent/spec-writer.md" />
+    <File Path=".opencode/agent/planner.md" />
+  </Folder>
+  <Folder Name="/Solution Items/">
+    <File Path="AGENTS.md" />
+    <File Path="opencode.json" />
+    <File Path="README.md" />
+  </Folder>
+  <Folder Name="/specs/">
+    <File Path="specs/CONSTITUTION.md" />
+  </Folder>
+  <Folder Name="/specs/INTENT/" />
+  <Folder Name="/specs/INTENT/I-1-pets-management/">
+    <File Path="specs/INTENT/I-1-pets-management/intent.md" />
+    <File Path="specs/INTENT/I-1-pets-management/spec.md" />
+    <File Path="specs/INTENT/I-1-pets-management/plan.md" />
+  </Folder>
+  
+  <Folder Name="/src/">
+    <Project Path="src/Petit.WebApi/Petit.WebApi.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Petit.WepApi.Tests/Petit.WepApi.Tests.csproj" />
+  </Folder>
+</Solution>
