@@ -19,6 +19,9 @@
     <File Path="specs/INTENT/I-1-pets-management/spec.md" />
     <File Path="specs/INTENT/I-1-pets-management/plan.md" />
   </Folder>
+  <Folder Name="/specs/INTENT/I-2-food-management/">
+    <File Path="specs\INTENT\I-2-food-management\intent.md" />
+  </Folder>
   
   <Folder Name="/src/">
     <Project Path="src/Petit.WebApi/Petit.WebApi.csproj" />
