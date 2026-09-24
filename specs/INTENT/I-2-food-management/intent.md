@@ -1,6 +1,6 @@
 ---
 id: I-2-food-management
-status: draft
+status: approved
 ---
 
 # Intent: Food CRUD — full resource management
@@ -28,11 +28,10 @@ Listing also supports free-text search (matching name or producer) and optional 
 - Auth via Keycloak JWT; users can only see and modify their own food items
 - PostgreSQL with EF Core 10
 - .NET 10, Minimal API (per CONSTITUTION.md)
-
-## Open Questions
-- Should list include pagination? If yes, what defaults (page size)?
-- Should delete be hard-delete or soft-delete (with `DeletedAt`)?
-- Is the owner immutable after creation, or can it change via update?
-- What are the allowed values for food type and pet type enums?
-- How should free-text search behave — case-insensitive, partial match, word boundaries?
-- What are valid ranges for numeric fields (caloriesPer100g, servingSize)?
+- No pagination on list — return all matching food items
+- Delete is hard-delete
+- Owner is immutable after creation
+- Allowed values for `type`: Dry, Wet, Raw, Treats, Other
+- Allowed values for `petType`: Dog, Cat, Other
+- Free-text search matches `name` or `producer`, case-insensitive, partial match
+- `caloriesPer100g` and `servingSize` must be between 0 and 10000
