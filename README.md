@@ -77,6 +77,15 @@ Three custom OpenCode agents live in `.opencode/agent/`, each scoped to exactly 
 
 Actual code is written by OpenCode's **built-in `Build` agent** — switched to only after `plan.md` is approved — following the plan step by step (implemented incrementally, one or two steps at a time, to keep the local model's context load manageable and make deviations easier to catch).
 
+### Example prompts per stage
+
+- **`intent-writer`** — `Draft intent.md for full CRUD on the Pet resource: create, list, get by id, update, delete. [Ask / Why / entity attributes / constraints]. Save it to specs/INTENT/I-1-pets-management/intent.md`
+- **`spec-writer`** — `Generate spec.md from specs/INTENT/I-1-pets-management/intent.md, following CONSTITUTION.md. Save it to specs/INTENT/I-1-pets-management/spec.md`
+- **`planner`** — `Generate plan.md from specs/INTENT/I-1-pets-management/spec.md, following CONSTITUTION.md. Save it to specs/INTENT/I-1-pets-management/plan.md`
+- **`Build`** — `Implement steps 1-2 from specs/INTENT/I-1-pets-management/plan.md: add NuGet packages and configure Keycloak JWT auth. Follow CONSTITUTION.md. Stop after these two steps.`
+
+Paths always given explicitly; implementation done in small increments, not the whole plan at once.
+
 ### Human roles per artifact
 
 This is a solo experiment, so one person (the repo owner) plays every role below — but the roles are kept conceptually distinct, matching how this would map onto a team:
