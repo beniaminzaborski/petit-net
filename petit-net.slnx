@@ -21,6 +21,7 @@
   </Folder>
   <Folder Name="/specs/INTENT/I-2-food-management/">
     <File Path="specs\INTENT\I-2-food-management\intent.md" />
+    <File Path="specs\INTENT\I-2-food-management\spec.md" />
   </Folder>
   
   <Folder Name="/src/">
