@@ -1,6 +1,6 @@
 ---
 id: I-2-food-management
-status: draft
+status: approved
 ---
 
 # Plan: Food CRUD — full resource management
