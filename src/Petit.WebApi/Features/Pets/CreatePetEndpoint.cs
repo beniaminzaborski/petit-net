@@ -16,7 +16,7 @@ public static class CreatePetEndpoint
         app.MapPost("/api/pets", async (
                 [FromBody] CreatePetRequest request,
                 [FromServices] IValidator<CreatePetRequest> validator,
-                [FromServices] PetDbContext context,
+                [FromServices] PetitDbContext context,
                 HttpContext httpContext) =>
             {
                 var userId = httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "";

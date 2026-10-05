@@ -40,7 +40,7 @@ public class CreatePetEndpointTests : IClassFixture<TestWebApplicationFactory>
         response.StatusCode.Should().Be(HttpStatusCode.Created);
 
         using var scope = _factory.Services.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<PetDbContext>();
+        var context = scope.ServiceProvider.GetRequiredService<PetitDbContext>();
         var persisted = await context.Pets.Where(p => p.Name == "Buddy").FirstOrDefaultAsync();
 
         persisted.Should().NotBeNull();

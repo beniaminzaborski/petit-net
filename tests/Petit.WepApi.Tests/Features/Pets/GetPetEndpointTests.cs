@@ -35,7 +35,7 @@ public class GetPetEndpointTests : IClassFixture<TestWebApplicationFactory>
             UpdatedAt = DateTime.UtcNow
         };
 
-        var context = _factory.Services.GetRequiredService<PetDbContext>();
+        var context = _factory.Services.GetRequiredService<PetitDbContext>();
         Console.WriteLine($"Test context: {context.GetHashCode()}");
         context.Pets.Add(pet);
         await context.SaveChangesAsync();

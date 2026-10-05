@@ -2,21 +2,20 @@ using FluentValidation;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Petit.WebApi.Data;
-using Petit.WebApi.Features.Pets.Handlers;
-using Petit.WebApi.Features.Pets.Validators;
+using Petit.WebApi.Features.Food.Handlers;
+using Petit.WebApi.Features.Food.Validators;
 using Petit.WebApi.RequestModels;
 using System.Security.Claims;
 
-namespace Petit.WebApi.Features.Pets;
+namespace Petit.WebApi.Features.Food;
 
-public static class UpdatePetEndpoint
+public static class CreateFoodEndpoint
 {
-    public static IEndpointRouteBuilder MapUpdatePet(this IEndpointRouteBuilder app)
+    public static IEndpointRouteBuilder MapCreateFood(this IEndpointRouteBuilder app)
     {
-        app.MapPut("/api/pets/{id:guid}", async (
-                Guid id,
-                [FromBody] UpdatePetRequest request,
-                [FromServices] IValidator<UpdatePetRequest> validator,
+        app.MapPost("/api/foods", async (
+                [FromBody] CreateFoodRequest request,
+                [FromServices] IValidator<CreateFoodRequest> validator,
                 [FromServices] PetitDbContext context,
                 HttpContext httpContext) =>
             {
@@ -31,17 +30,14 @@ public static class UpdatePetEndpoint
                     });
                 }
 
-                var (statusCode, data) = await UpdatePetHandler.UpdateAsync(context, id, request, userId);
+                var (statusCode, data) = await CreateFoodHandler.CreateAsync(context, request, userId);
 
-                if (statusCode == 404)
+                if (statusCode == 201)
                 {
-                    return Results.NotFound(new
-                    {
-                        error = "Pet not found or does not belong to the user."
-                    });
+                    return Results.Created($"/api/foods/{data.Id}", data);
                 }
 
-                return Results.Ok(data);
+                return Results.StatusCode(statusCode);
             })
             .RequireAuthorization();
 

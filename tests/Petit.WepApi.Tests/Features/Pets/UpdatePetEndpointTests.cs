@@ -25,7 +25,7 @@ public class UpdatePetEndpointTests : IClassFixture<TestWebApplicationFactory>
     public async Task Put_Pet_WithExistingId_Returns200_AndUpdatesData()
     {
         using var scope = _factory.Services.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<PetDbContext>();
+        var context = scope.ServiceProvider.GetRequiredService<PetitDbContext>();
 
         var pet = new Pet
         {
@@ -85,7 +85,7 @@ public class UpdatePetEndpointTests : IClassFixture<TestWebApplicationFactory>
     public async Task Put_Pet_WithMissingName_Returns400()
     {
         using var scope = _factory.Services.CreateScope();
-        var context = scope.ServiceProvider.GetRequiredService<PetDbContext>();
+        var context = scope.ServiceProvider.GetRequiredService<PetitDbContext>();
 
         var pet = new Pet
         {

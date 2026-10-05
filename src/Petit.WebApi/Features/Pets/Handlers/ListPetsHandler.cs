@@ -6,7 +6,7 @@ namespace Petit.WebApi.Features.Pets.Handlers;
 public static class ListPetsHandler
 {
     public static async Task<(int StatusCode, PetResponse[] Data, int TotalItems)> ListAsync(
-        PetDbContext context,
+        PetitDbContext context,
         string userId,
         int page = 0,
         int pageSize = 20,

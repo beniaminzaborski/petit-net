@@ -6,7 +6,7 @@ namespace Petit.WebApi.Features.Pets.Handlers;
 public static class GetPetHandler
 {
     public static async Task<(int StatusCode, PetResponse? Data)> GetByIdAsync(
-        PetDbContext context,
+        PetitDbContext context,
         Guid id,
         string userId)
     {

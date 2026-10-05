@@ -54,9 +54,9 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>, IDispos
             })
             .AddScheme<Microsoft.AspNetCore.Authentication.AuthenticationSchemeOptions, TestAuthHandler>("Test", _ => { });
 
-            // Remove all DbContextOptions<PetDbContext> registrations (from Program.cs)
+            // Remove all DbContextOptions<PetitDbContext> registrations (from Program.cs)
             var dbContextOptionsDescriptors = services
-                .Where(d => d.ServiceType == typeof(DbContextOptions<PetDbContext>))
+                .Where(d => d.ServiceType == typeof(DbContextOptions<PetitDbContext>))
                 .ToList();
 
             foreach (var descriptor in dbContextOptionsDescriptors)
@@ -64,9 +64,9 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>, IDispos
                 services.Remove(descriptor);
             }
 
-            // Remove the PetDbContext itself if it's registered
+            // Remove the PetitDbContext itself if it's registered
             var dbContextDescriptors = services
-                .Where(d => d.ImplementationType == typeof(PetDbContext))
+                .Where(d => d.ImplementationType == typeof(PetitDbContext))
                 .ToList();
 
             foreach (var descriptor in dbContextDescriptors)
@@ -75,18 +75,18 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>, IDispos
             }
 
             // Build options first - use a static database name so all contexts share the same InMemory store
-            var optionsBuilder = new DbContextOptionsBuilder<PetDbContext>();
+            var optionsBuilder = new DbContextOptionsBuilder<PetitDbContext>();
             optionsBuilder.UseInMemoryDatabase("__PetDb_Test__");
             var sharedOptions = optionsBuilder.Options;
 
             // Register options as singleton
-            services.AddSingleton<DbContextOptions<PetDbContext>>(sharedOptions);
+            services.AddSingleton<DbContextOptions<PetitDbContext>>(sharedOptions);
 
             // Create a single context instance and register it as singleton only.
             // The container won't track it for disposal, preventing ObjectDisposedException.
             // All scopes and the HTTP pipeline will resolve this same instance via the singleton options.
-            var sharedContext = new PetDbContext(sharedOptions);
-            services.AddSingleton<PetDbContext>(sharedContext);
+            var sharedContext = new PetitDbContext(sharedOptions);
+            services.AddSingleton<PetitDbContext>(sharedContext);
         });
 
         return base.CreateHost(builder);
@@ -95,7 +95,7 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>, IDispos
     public void DisposeTestDatabase()
     {
         using var scope = Services.CreateScope();
-        var dbContext = scope.ServiceProvider.GetRequiredService<PetDbContext>();
+        var dbContext = scope.ServiceProvider.GetRequiredService<PetitDbContext>();
         dbContext.Database.EnsureDeleted();
     }
 

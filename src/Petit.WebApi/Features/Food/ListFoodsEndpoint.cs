@@ -1,16 +1,16 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Petit.WebApi.Data;
-using Petit.WebApi.Features.Pets.Handlers;
+using Petit.WebApi.Features.Food.Handlers;
 using System.Security.Claims;
 
-namespace Petit.WebApi.Features.Pets;
+namespace Petit.WebApi.Features.Food;
 
-public static class ListPetsEndpoint
+public static class ListFoodsEndpoint
 {
-    public static IEndpointRouteBuilder MapListPets(this IEndpointRouteBuilder app)
+    public static IEndpointRouteBuilder MapListFoods(this IEndpointRouteBuilder app)
     {
-        app.MapGet("/api/pets", async (
+        app.MapGet("/api/foods", async (
                 HttpContext httpContext,
                 [FromQuery] int page = 0,
                 [FromQuery] int pageSize = 10,
@@ -19,7 +19,7 @@ public static class ListPetsEndpoint
             {
                 var userId = httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "";
 
-                var (statusCode, data, totalItems) = await ListPetsHandler.ListAsync(context, userId, page, pageSize, type);
+                var (statusCode, data, totalItems) = await ListFoodsHandler.ListAsync(context, userId, page, pageSize, type);
 
                 return Results.Ok(new
                 {

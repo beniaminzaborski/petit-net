@@ -7,7 +7,7 @@ namespace Petit.WebApi.Features.Pets.Handlers;
 public static class UpdatePetHandler
 {
     public static async Task<(int StatusCode, PetResponse? Data)> UpdateAsync(
-        PetDbContext context,
+        PetitDbContext context,
         Guid id,
         UpdatePetRequest request,
         string userId)

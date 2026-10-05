@@ -12,7 +12,7 @@ public static class GetPetEndpoint
     {
         app.MapGet("/api/pets/{id:guid}", async (
                 Guid id,
-                [FromServices] PetDbContext context,
+                [FromServices] PetitDbContext context,
                 HttpContext httpContext) =>
             {
                 var userId = httpContext.User.FindFirstValue(ClaimTypes.NameIdentifier) ?? "";

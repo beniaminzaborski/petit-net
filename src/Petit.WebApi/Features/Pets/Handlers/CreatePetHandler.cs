@@ -7,7 +7,7 @@ namespace Petit.WebApi.Features.Pets.Handlers;
 public static class CreatePetHandler
 {
     public static async Task<(int StatusCode, PetResponse Data)> CreateAsync(
-        PetDbContext context,
+        PetitDbContext context,
         CreatePetRequest request,
         string userId)
     {

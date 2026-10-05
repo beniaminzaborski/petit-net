@@ -6,15 +6,15 @@ using Petit.WepApi.Tests.Infrastructure;
 using System.Net;
 using System.Net.Http.Json;
 
-namespace Petit.WepApi.Tests.Features.Pets;
+namespace Petit.WepApi.Tests.Features.Food;
 
-[Collection("Pets")]
-public class ListPetsEndpointTests : IClassFixture<TestWebApplicationFactory>, IDisposable
+[Collection("Food")]
+public class ListFoodsEndpointTests : IClassFixture<TestWebApplicationFactory>, IDisposable
 {
     private readonly HttpClient _client;
     private readonly TestWebApplicationFactory _factory;
 
-    public ListPetsEndpointTests(TestWebApplicationFactory factory)
+    public ListFoodsEndpointTests(TestWebApplicationFactory factory)
     {
         _client = factory.CreateClient();
         _factory = factory;
@@ -30,25 +30,25 @@ public class ListPetsEndpointTests : IClassFixture<TestWebApplicationFactory>, I
     {
         using var scope = _factory.Services.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<PetitDbContext>();
-        context.Pets.RemoveRange(context.Pets);
+        context.Foods.RemoveRange(context.Foods);
         context.SaveChanges();
     }
 
     [Fact]
-    public async Task Get_Pets_Returns200_WithPaginatedData()
+    public async Task Get_Foods_Returns200_WithPaginatedData()
     {
         ClearDatabase();
         using var scope = _factory.Services.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<PetitDbContext>();
 
-        await context.Pets.AddRangeAsync(
-            new Pet { Id = Guid.NewGuid(), Name = "Alice", Type = "Dog", Gender = "Female", OwnerId = "test-user", CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
-            new Pet { Id = Guid.NewGuid(), Name = "Buddy", Type = "Cat", Gender = "Male", OwnerId = "test-user", CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
-            new Pet { Id = Guid.NewGuid(), Name = "Charlie", Type = "Dog", Gender = "Male", OwnerId = "test-user", CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow }
+        await context.Foods.AddRangeAsync(
+            new Petit.WebApi.Data.Food { Id = Guid.NewGuid(), Name = "Chicken", Producer = "Farm A", Type = "Raw", PetType = "Dog", CaloriesPer100g = 165, ServingSize = 100, OwnerId = "test-user", CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+            new Petit.WebApi.Data.Food { Id = Guid.NewGuid(), Name = "Kibble", Producer = "Farm B", Type = "Dry", PetType = "Cat", CaloriesPer100g = 350, ServingSize = 50, OwnerId = "test-user", CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+            new Petit.WebApi.Data.Food { Id = Guid.NewGuid(), Name = "Salmon", Producer = "Farm C", Type = "Fish", PetType = "Dog", CaloriesPer100g = 208, ServingSize = 80, OwnerId = "test-user", CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow }
         );
         await context.SaveChangesAsync();
 
-        var response = await _client.GetAsync("/api/pets");
+        var response = await _client.GetAsync("/api/foods");
 
         if (response.StatusCode != HttpStatusCode.OK)
         {
@@ -65,19 +65,19 @@ public class ListPetsEndpointTests : IClassFixture<TestWebApplicationFactory>, I
     }
 
     [Fact]
-    public async Task Get_Pets_WithTypeFilter_ReturnsFilteredResults()
+    public async Task Get_Foods_WithTypeFilter_ReturnsFilteredResults()
     {
         ClearDatabase();
         using var scope = _factory.Services.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<PetitDbContext>();
 
-        await context.Pets.AddRangeAsync(
-            new Pet { Id = Guid.NewGuid(), Name = "Alice", Type = "Dog", Gender = "Female", OwnerId = "test-user", CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
-            new Pet { Id = Guid.NewGuid(), Name = "Whiskers", Type = "Cat", Gender = "Male", OwnerId = "test-user", CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow }
+        await context.Foods.AddRangeAsync(
+            new Petit.WebApi.Data.Food { Id = Guid.NewGuid(), Name = "Chicken", Producer = "Farm A", Type = "Raw", PetType = "Dog", CaloriesPer100g = 165, ServingSize = 100, OwnerId = "test-user", CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow },
+            new Petit.WebApi.Data.Food { Id = Guid.NewGuid(), Name = "Kibble", Producer = "Farm B", Type = "Dry", PetType = "Cat", CaloriesPer100g = 350, ServingSize = 50, OwnerId = "test-user", CreatedAt = DateTime.UtcNow, UpdatedAt = DateTime.UtcNow }
         );
         await context.SaveChangesAsync();
 
-        var response = await _client.GetAsync("/api/pets?type=Dog");
+        var response = await _client.GetAsync("/api/foods?type=Dry");
 
         if (response.StatusCode != HttpStatusCode.OK)
         {
@@ -94,7 +94,7 @@ public class ListPetsEndpointTests : IClassFixture<TestWebApplicationFactory>, I
     }
 
     [Fact]
-    public async Task Get_Pets_WithPagination_ReturnsCorrectPageSize()
+    public async Task Get_Foods_WithPagination_ReturnsCorrectPageSize()
     {
         ClearDatabase();
         using var scope = _factory.Services.CreateScope();
@@ -102,12 +102,15 @@ public class ListPetsEndpointTests : IClassFixture<TestWebApplicationFactory>, I
 
         for (var i = 0; i < 5; i++)
         {
-            await context.Pets.AddAsync(new Pet
+            await context.Foods.AddAsync(new Petit.WebApi.Data.Food
             {
                 Id = Guid.NewGuid(),
-                Name = $"Pet{i}",
-                Type = "Dog",
-                Gender = "Male",
+                Name = $"Food{i}",
+                Producer = "Farm A",
+                Type = "Raw",
+                PetType = "Dog",
+                CaloriesPer100g = 165,
+                ServingSize = 100,
                 OwnerId = "test-user",
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
@@ -115,7 +118,7 @@ public class ListPetsEndpointTests : IClassFixture<TestWebApplicationFactory>, I
         }
         await context.SaveChangesAsync();
 
-        var response = await _client.GetAsync("/api/pets?page=0&pageSize=2");
+        var response = await _client.GetAsync("/api/foods?page=0&pageSize=2");
 
         if (response.StatusCode != HttpStatusCode.OK)
         {
