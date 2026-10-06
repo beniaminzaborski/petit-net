@@ -14,7 +14,7 @@ var isTesting = builder.Environment.IsEnvironment("Testing");
 if (!isTesting)
 {
     builder.Services.AddDbContext<PetitDbContext>(options =>
-        options.UseNpgsql(builder.Configuration.GetConnectionString("PetDbConnection")));
+        options.UseNpgsql(builder.Configuration.GetConnectionString("PetitDbConnection")));
 }
 else
 {

@@ -44,7 +44,7 @@ status: approved
 
 1. **Add required NuGet packages** to `Petit.WebApi.csproj`: `FluentValidation`, `FluentValidation.DependencyInjectionExtensions`, [`EFCore.Npgsql`](https://www.nuget.org/packages/EFCore.Npgsql), [`Microsoft.AspNetCore.Authentication.JwtBearer`](https://www.nuget.org/packages/Microsoft.AspNetCore.Authentication.JwtBearer)
 2. **Configure auth in Program.cs** (before building app): Add Keycloak JWT Bearer authentication middleware — Authority and audience from configuration only, never hardcoded. This is a prerequisite for all subsequent endpoint code.
-3. **Add dev connection string to `appsettings.json`**: e.g. `"PetDbConnection": "Host=localhost;Port=5432;Database=pets_local;Username=postgres;Password=postgres"` — used by EF Core setup in step 4.
+3. **Add dev connection string to `appsettings.json`**: e.g. `"PetitDbConnection": "Host=localhost;Port=5432;Database=pets_local;Username=postgres;Password=postgres"` — used by EF Core setup in step 4.
 4. **Configure EF Core** in Program.cs: use the named connection string from `appsettings` (or env var) with `EFCore.Npgsql`, call `AddDbContext<AppDbContext>();`, wire `DbSet<Pet>`. No migration plumbing or seed logic here — just the registration so persistence is live before any handler runs.
 5. **Create entity + config**: Write `Pet.cs` and `PetEntityTypeConfiguration.cs`. The entity mirrors the spec's data fields exactly. Configuration goes into its own file per CONSTITUTION.md, NOT Fluent API in OnModelCreating.
 6. **Write RequestModels** (DTO/Request): `CreatePetRequest.cs`, `UpdatePetRequest.cs`, `PetResponse.cs`. Simple POCOs, no constructors needed — C# 12 init/record or simple class with properties.

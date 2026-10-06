@@ -27,7 +27,7 @@ public class TestWebApplicationFactory : WebApplicationFactory<Program>, IDispos
             {
                 InitialData = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase)
                 {
-                    ["ConnectionStrings:PetDbConnection"] = "",
+                    ["ConnectionStrings:PetitDbConnection"] = "",
                     ["Keycloak:Authority"] = "http://localhost:test",
                     ["Keycloak:Audience"] = "test-audience"
                 }

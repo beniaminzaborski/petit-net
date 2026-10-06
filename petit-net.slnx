@@ -24,6 +24,11 @@
     <File Path="specs\INTENT\I-2-food-management\plan.md" />
     <File Path="specs\INTENT\I-2-food-management\spec.md" />
   </Folder>
+  <Folder Name="/specs/INTENT/I-3-local-dev-environment/">
+    <File Path="specs\INTENT\I-3-local-dev-environment\intent.md" />
+    <File Path="specs\INTENT\I-3-local-dev-environment\plan.md" />
+    <File Path="specs\INTENT\I-3-local-dev-environment\spec.md" />
+  </Folder>
   
   <Folder Name="/src/">
     <Project Path="src/Petit.WebApi/Petit.WebApi.csproj" />
